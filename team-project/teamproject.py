@@ -1,10 +1,29 @@
-from urllib.request import urlopen
+import pandas as pd
 from bs4 import BeautifulSoup
+from selenium import webdriver
+
+url = 'https://coronaboard.kr'
+
+driver = webdriver.Chrome('C:/Users/82102/Desktop/first_git_project/team-project/chromedriver.exe')
+driver.get(url) # url 불러오기
+driver.implicitly_wait(3) # 3초 기다리기
+
+data = driver.page_source # 페이지 소스 가져오기
+
+soup = BeautifulSoup(data, 'html.parser')
 
 
-html=urlopen("https://kosis.kr/statHtml/statHtml.do?orgId=127&tblId=DT_120019N_2016_001&vw_cd=&list_id=&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=E1&docId=0313756944&markType=S&itmNm=%EC%A0%84%EA%B5%AD")
-soup=BeautifulSoup(html, "lxml")
+driver.find_element_by_xpath('/html/body/div[8]/div/div[3]/button').click()
+driver.find_element_by_xpath('/html/body/div[8]/div/div[3]/button').click()
 
-statistics_table = soup.find_all('table', {"id":"maintable"})
+print(soup.select('#country-table > div > div > table'))
+df = pd.read_html(soup.prettify())[0]
+
+print(type(df))
+
+print(df)
+
+driver.quit()
+
 
 
