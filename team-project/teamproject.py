@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -13,9 +14,6 @@ data = driver.page_source # 페이지 소스 가져오기
 soup = BeautifulSoup(data, 'html.parser')
 
 
-driver.find_element_by_xpath('/html/body/div[8]/div/div[3]/button').click()
-driver.find_element_by_xpath('/html/body/div[8]/div/div[3]/button').click()
-
 print(soup.select('#country-table > div > div > table'))
 df = pd.read_html(soup.prettify())[0]
 
@@ -25,5 +23,5 @@ print(df)
 
 driver.quit()
 
-
+df.iloc[0,2:4].plot(kind='bar')
 
