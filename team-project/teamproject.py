@@ -15,8 +15,8 @@ data = driver.page_source # 페이지 소스 가져오기
 
 soup = BeautifulSoup(data, 'html.parser')
 
-
-print(soup.select('#country-table > div > div > table'))
+soup_select=soup.select('#country-table > div > div > table')
+print(soup_select)
 df = pd.read_html(soup.prettify())[0]
 
 print(type(df))
@@ -24,9 +24,6 @@ print(type(df))
 print(df)
 
 driver.quit()
-
-
-
 
 a=input()
 for i in range(75):
@@ -43,12 +40,13 @@ c = [int(i) for i in c]
 
 print(c)
 
-
+e= a+' 코로나 현황'
 font_name = mpl.font_manager.FontProperties(fname='C:/Windows/Fonts/malgun.ttf').get_name()
 mpl.rc('font', family=font_name)
 x = np.arange(3)
 d=['확진자','사망자','완치']
-plt.bar(x, c)
+plt.bar(x, c,color="red")
 plt.xticks(x, d)
+plt.title(e)
 plt.show()
 
